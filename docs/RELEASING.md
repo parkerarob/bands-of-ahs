@@ -52,12 +52,12 @@ sensitive diagnostics: inspect locally and sanitize excerpts before posting. Fai
 never deploys. A live-proof failure means publication may already have happened: inspect the alias
 before retrying, and use `verify:live` to repeat proof without redeploying.
 
-The Regiment OS projection is checked before the expensive suite. Known issue #46 tracks a local
-`PORTAL_SESSION_SECRET` mismatch. Do not commit a replacement encrypted with an unverified local key.
-Until that separate configuration issue is resolved, release processes may inherit the trusted
-production value for that variable only, loaded without printing it from the locally pulled Vercel
-production environment. This does not rotate credentials or alter saved local configuration. The
-projection check must pass with that value before release proceeds.
+The Regiment OS projection is checked before the expensive suite. Use the actual locally provisioned
+`PORTAL_SESSION_SECRET`, verified against an authenticated live read. Vercel Sensitive environment
+variables export as `[SENSITIVE]`; that marker is not a production key and must never override the
+local key, sign a test cookie, or encrypt content. The builder rejects export placeholders. A failed
+probe using a placeholder does not establish a production credential failure. Verify sensitive
+settings through the running application, never by sending export markers to a provider.
 
 Normal exit and interrupt release the lock. After an uncatchable kill, inspect `production.lock/pid`
 and confirm that process and its deployment children have ended. Only then remove that stale lock

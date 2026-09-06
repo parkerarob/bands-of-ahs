@@ -3,6 +3,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import crypto from "node:crypto";
 import path from "node:path";
+import { requireSecretValue } from "./lib/secret-value.mjs";
 import {
   bandWebsiteRoot,
   bandsofAHSRoot,
@@ -115,11 +116,7 @@ const projection = {
 };
 
 loadBandWebsiteEnv();
-const secret = process.env.PORTAL_SESSION_SECRET;
-if (!secret) {
-  console.error("PORTAL_SESSION_SECRET is required to encrypt the Regiment OS projection.");
-  process.exit(1);
-}
+const secret = requireSecretValue(process.env.PORTAL_SESSION_SECRET, "PORTAL_SESSION_SECRET");
 
 const plaintext = JSON.stringify(projection);
 const key = crypto.createHash("sha256").update(`regiment-os-content:${secret}`).digest();
