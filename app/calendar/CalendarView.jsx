@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 
 const MONTHS = ["January", "February", "March", "April", "May", "June",
   "July", "August", "September", "October", "November", "December"];
@@ -140,6 +141,7 @@ export default function CalendarView() {
       .then((r) => r.json())
       .then((rows) => {
         setEvents(rows);
+        if (window.innerWidth < 720) setView("agenda");
         const today = new Date();
         const next = rows.find((e) => {
           const a = ymd(e.start);
@@ -149,8 +151,7 @@ export default function CalendarView() {
         setCursor({ y: a.y, m: a.m });
       })
       .catch(() => setEvents([]));
-    // Phones default to the agenda list, which reads far better than a squeezed grid.
-    if (typeof window !== "undefined" && window.innerWidth < 720) setView("agenda");
+
   }, []);
 
   useEffect(() => {
@@ -229,8 +230,8 @@ export default function CalendarView() {
   };
 
   const Chip = ({ ev }) => (
-    <button type="button" className="cal-chip" style={chipStyle(ev)} onClick={() => setOpenEvent(ev)} title={ev.title}>
-      {timeLabel(ev.start) && <b>{timeLabel(ev.start)} </b>}{ev.title}
+    <button type="button" className="cal-chip" style={chipStyle(ev)} onClick={() => setOpenEvent(ev)} title={ev.title} aria-label={`${ev.title}, ${whenLabel(ev)}`}>
+      {timeLabel(ev.start) && <b className="cal-chip-time">{timeLabel(ev.start)} </b>}<span className="cal-chip-title">{ev.title}</span>
     </button>
   );
 
@@ -261,8 +262,9 @@ export default function CalendarView() {
         </div>
       )}
 
+      {view === "month" && <p className="cal-phone-hint">Swipe across the month, or <button type="button" onClick={() => setView("agenda")}>use List for full event details</button>.</p>}
       {view === "month" ? (
-        <>
+        <div className="cal-month-scroll" role="region" aria-label="Month calendar; scroll horizontally on a phone" tabIndex={0}>
           <div className="cal-grid cal-dow">
             {DOW.map((d) => <div key={d} className="cal-dowcell">{d}</div>)}
           </div>
@@ -285,7 +287,7 @@ export default function CalendarView() {
               );
             })}
           </div>
-        </>
+        </div>
       ) : (
         <div className="cal-agenda">
           {agenda.length === 0 && <p className="cal-loading">No upcoming events on the calendar right now.</p>}
@@ -351,6 +353,7 @@ export default function CalendarView() {
             <p className="cal-modal-when">{whenLabel(openEvent)}</p>
             {openEvent.location && <p className="cal-modal-loc">{openEvent.location}</p>}
             {openEvent.description && <p>{openEvent.description}</p>}
+            {openEvent.id === "evt-0117" && <p><Link href="/info/carnegie-2027">Current Carnegie trip information</Link></p>}
             <div className="cal-modal-actions">
               <a className="button primary" href={gcalLink(openEvent)} target="_blank" rel="noopener noreferrer">
                 Add to Google Calendar

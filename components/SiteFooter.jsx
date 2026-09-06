@@ -25,7 +25,7 @@ const COLUMNS = [
       { href: "/portal", label: "Family Portal" },
       { href: "/portal/request", label: "Request Portal Access" },
       { href: "/info/required-items", label: "Required Items" },
-      { href: "/info/the-band-folder", label: "The Band Folder" },
+      { href: "/info/the-band-folder", label: "Student Resources" },
       { href: "https://ashleybandshirts.printify.me/", label: "Band Shirts Store", external: true }
     ]
   },

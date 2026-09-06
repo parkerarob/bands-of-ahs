@@ -42,7 +42,7 @@ Ashley Bands is planning a New York trip for March 23-26, 2027, with the Carnegi
 
 ### Family response
 
-One response per student was requested by Friday, September 4, 2026. Review the [current family commitment form](/carnegie-2027/commit) for the response choices, acknowledgement, and signatures. For help with a response after that date, contact Mr. Parker at robert.parker@nhcs.net.
+One response per student was requested by Friday, September 4, 2026. Review the [current family commitment form](/carnegie-2027/commit) for the response choices, acknowledgement, and signatures. For help with a response after that date, [contact Mr. Parker](mailto:robert.parker@nhcs.net).
 
 Cost should not turn a yes, if funded, into a no. Families can indicate that their student intends to participate if the family responsibility can be reduced. Choose no only if the student cannot participate regardless of financial assistance.
 
@@ -52,9 +52,15 @@ The trip is planning around $2,500 per traveler. This is an estimate, not a fina
 
 The response records whether a family can plan for up to $2,000 or needs the family responsibility reduced below $2,000. If outside support cannot bring the final responsibility within the amount selected, the program must return to the family for a new decision before final registration.
 
+### The $50 deposit choice
+
 Every yes response includes the same separate $50 conditional-deposit choice. Choosing to pay now creates the connected $50 charge and opens payment options after the response is saved. Choosing that the deposit cannot be paid at this time creates no new charge and does not change the yes response.
 
+### Already paid the deposit?
+
 Families with a completed $50 deposit do not submit again or pay another $50. Use the [Family Portal](/portal) to review the connected record. For an individual balance, payment, refund, or access question, contact Mr. Parker directly.
+
+### Refunds and final registration
 
 This is initial family intent, not the final trip contract. The deposit is refundable until the participation threshold is confirmed and the Boosters pay the WorldStrides group deposit; after that it becomes nonrefundable. This page does not establish that the group deposit has been paid. Changing a response does not automatically refund a completed payment.
 
@@ -71,9 +77,9 @@ Students are not individually confirmed until WorldStrides registration and requ
 Source: https://ashleybands.com/info/2026-2027-band-information
 ## 2026-2027 Band Information
 
-This page collects the general next-year information normally covered at open house.
+This page collects the 2026-2027 information for students and families.
 
-The band calendar at ashleybands.com/calendar is the official source of truth for dates and times.
+The [band calendar](/calendar) is the official source of truth for dates and times.
 
 ## Major Dates
 
@@ -96,13 +102,9 @@ May 11, 2027 at 7:00 PM
 
 ## Marching Band / Fall Dates
 
-Families should also review the Marching Band 2026 page for fall dates and expectations.
+Families should also review [Marching Band 2026](/info/marching-band-2026) for fall dates and expectations.
 
-Working dates include:
-
-- July 27-31, 2026 - colorguard camp (all week); leadership Jul 28-30
-- August 3, 2026 - band camp
-- August 10, 2026 - band camp
+Fall dates include:
 - September 26, 2026 - mattress fundraiser
 - October 17, 2026 - Pirate Classic, confirmed / registered
 
@@ -114,8 +116,7 @@ The band calendar is the official source of truth for band events.
 
 Subscribe to the calendar instead of downloading a one-time copy. Subscribing allows updates to appear automatically.
 
-Open and subscribe at:  
-https://ashleybands.com/calendar
+[Open the calendar and subscription options](/calendar).
 
 ### Family Portal
 
@@ -129,9 +130,9 @@ The Family Portal is used for:
 - instrument / music / equipment records
 - band communication
 
-Open the portal at https://ashleybands.com/portal
+[Open the Family Portal](/portal).
 
-If your email is new or does not connect to your student, request access from the portal. If you still need help, email Mr. Parker.
+If your email is new or does not connect to your student, request access from the portal. If you still need help, [email Mr. Parker](mailto:robert.parker@nhcs.net).
 
 ### Google Chat
 
@@ -143,7 +144,7 @@ Important note: with the change from Google to Microsoft, we may transition to M
 
 ## Student Materials
 
-The Band Folder is the main resource page for everything students need.
+[Student Resources (The Band Folder)](/info/the-band-folder) is the main page for student supplies, clothing, and methods.
 
 Students should have:
 
@@ -175,7 +176,7 @@ All band members need the official red band shirt.
 
 The red band shirt is used for pep rallies, community performances, parades, and informal events.
 
-It can be purchased through the Band Shirts Store.
+[Buy the official Red Band Shirt](https://ashleybandshirts.printify.me/).
 
 ## Parent Involvement
 
@@ -193,9 +194,9 @@ All parents are connected to the Band Boosters simply by being part of the progr
 
 ## Questions
 
-For band questions, email Mr. Parker.
+For band questions, [email Mr. Parker](mailto:robert.parker@nhcs.net).
 
-For booster-specific questions, contact the Band Boosters.
+For booster-specific questions, [contact the Band Boosters](/boosters).
 
 MARCHING BAND 2026
 Source: https://ashleybands.com/info/marching-band-2026
@@ -372,9 +373,9 @@ Reference material for standard student equipment, materials, and baseline progr
 
 ## Required Items — All Band Students
 
-- **Instrument** (personal, rental, or school-owned — see `knowledge/instrument-reference.md`)
-- **Concert Attire:** Musician Black (all-black — see `facts/bandsofahs-facts.md`)
-- **Spirit Wear:** Official Red Band Shirt (required)
+- **Instrument** in working condition. See [instrument options and student supplies](/info/the-band-folder).
+- **Concert Attire:** Musician Black. See [concert attire details](/info/2026-2027-band-information).
+- **Spirit Wear:** [Official Red Band Shirt](https://ashleybandshirts.printify.me/) (required)
 - **Band Folder:** 1-inch BLACK 3-ring binder, sheet protectors, pencil pouch with pencils/scissors/eraser
 - **Tuner/Metronome:** TM-60/CM-200 combo provided; recommend owning TM-70/CM-400
 - **Band Methods** (provided but recommended to own):
@@ -385,7 +386,7 @@ Reference material for standard student equipment, materials, and baseline progr
 
 **Percussion students also need:** Snare Sticks · Practice Pad and Stand · Black Hand Towel
 
-THE BAND FOLDER
+STUDENT RESOURCES
 Source: https://ashleybands.com/info/the-band-folder
 # The Band Folder
 
@@ -395,13 +396,13 @@ Everything Needed for Band
 
 ### The Official Band Calendar
 
-The band calendar at ashleybands.com/calendar is the source of truth for all band events. Always assume the band calendar is correct if there is a date conflict. Subscribe once and dates update automatically.
+The [band calendar](/calendar) is the source of truth for all band events. Always assume the band calendar is correct if there is a date conflict. Subscribe once and dates update automatically.
 
 ### Family Portal
 
 Every student should be connected to at least one parent or guardian in the Ashley Bands Family Portal. Use it to keep family contacts and student details current and to complete Ashley Bands requests and forms without repeatedly entering information we already have.
 
-Open the portal at https://ashleybands.com/portal.
+[Open the Family Portal](/portal).
 
 ### Google Chat
 
@@ -419,8 +420,8 @@ Students receive invitations to their class-specific chats through their school-
 
 ### Clothing
 
-- Concert attire: Musician Black
-- Spirit wear / general attire: official Red Band Shirt and other program spirit wear
+- Concert attire: [Musician Black details](/info/2026-2027-band-information)
+- Spirit wear / general attire: [official Red Band Shirt and other program spirit wear](https://ashleybandshirts.printify.me/)
 
 ### Band Folder
 
@@ -433,6 +434,8 @@ Students receive invitations to their class-specific chats through their school-
 - Tuner/metronome: TM-60/CM-200 combo provided; TM-70/CM-400 recommended to own
 
 ### Band Methods
+
+These books are provided; owning a copy is recommended.
 
 - Foundations of Superior Performance (FSP), correct book for the student's instrument
 - 101 Rhythmic Rest Patterns

@@ -51,10 +51,10 @@ export default async function SponsorsHubPage() {
         <p className="eyebrow">Support the Bands of Ashley High School</p>
         <h1>Become a Screaming Eagle Sponsor</h1>
         <p className="sponsors-lede">
-          Local business sponsors fund the staff, transportation, scholarships, and instruments
-          that make a serious public-school band program possible. Two ways to give. Both build
-          the program for the long run.
+          Families, alumni, friends, and businesses help fund staff, transportation, scholarships,
+          and instruments. Give $5 or more, choose a sponsorship level, or help provide an instrument.
         </p>
+        <p>These giving options support the band program. For Carnegie Hall campaign support, <a href={`mailto:${SPONSOR_CONTACT.email}`}>contact Mr. Parker</a> or <Link href="/fundraising">explore current fundraisers</Link>.</p>
         <div className="sponsors-cta-row">
           <Link href="/sponsors/give" className="sponsors-btn sponsors-btn-primary">
             Give now
@@ -134,7 +134,7 @@ export default async function SponsorsHubPage() {
         <p>
           The 10-year capital track toward the 2036 vision: every student in the Ashley band
           program with the option of using a quality Yamaha instrument. Gifts of $2,500 or more
-          enter the year's instrument capital fund. Sole sponsors of a single instrument receive
+          enter the year&apos;s instrument capital fund. Sole sponsors of a single instrument receive
           a brass plaque on the case for the life of the instrument.
         </p>
 

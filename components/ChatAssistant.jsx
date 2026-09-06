@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const welcome = {
   role: "assistant",
@@ -125,7 +127,9 @@ Rules:
         {messages.map((message, index) => (
           <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`}>
             <div className="chat-bubble">
-              {message.content}
+              {message.role === "assistant" ? (
+                <div className="chat-markdown"><ReactMarkdown skipHtml remarkPlugins={[remarkGfm]} disallowedElements={["img"]}>{message.content}</ReactMarkdown></div>
+              ) : message.content}
               {message.flagged ? (
                 <div className="flag-note">This may need a direct answer from Mr. Parker.</div>
               ) : null}

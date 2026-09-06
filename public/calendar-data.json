@@ -780,6 +780,16 @@
   "description": null
  },
  {
+  "id": "evt-0117",
+  "title": "Carnegie Hall 2027 Trip (planning dates)",
+  "start": "2027-03-23",
+  "end": "2027-03-26",
+  "all_day": true,
+  "category": "Trip",
+  "location": "New York City / Carnegie Hall",
+  "description": "Planned travel March 23-26, 2027, with the Carnegie Hall performance on March 25. Final participation, price, approvals, and funding remain subject to confirmation. Current information: https://ashleybands.com/info/carnegie-2027"
+ },
+ {
   "id": "evt-0049",
   "title": "All-State Jazz Clinic",
   "start": "2027-04-09",

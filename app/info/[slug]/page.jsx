@@ -33,7 +33,7 @@ export default async function InfoPage({ params }) {
           <p><Link href="/info/carnegie-2027">Current Carnegie trip information</Link> · <Link href="/fundraising">Current fundraisers</Link> · <Link href="/calendar">Band calendar</Link></p>
         </aside>
       )}
-      <MarkdownBlock markdown={page.body} />
+      <MarkdownBlock markdown={page.body.replace(/^#{1,2} [^\n]+\n+/, "")} />
     </main>
   );
 }

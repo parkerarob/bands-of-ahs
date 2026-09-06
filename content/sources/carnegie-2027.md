@@ -4,7 +4,7 @@ Ashley Bands is planning a New York trip for March 23-26, 2027, with the Carnegi
 
 ### Family response
 
-One response per student was requested by Friday, September 4, 2026. Review the [current family commitment form](/carnegie-2027/commit) for the response choices, acknowledgement, and signatures. For help with a response after that date, contact Mr. Parker at robert.parker@nhcs.net.
+One response per student was requested by Friday, September 4, 2026. Review the [current family commitment form](/carnegie-2027/commit) for the response choices, acknowledgement, and signatures. For help with a response after that date, [contact Mr. Parker](mailto:robert.parker@nhcs.net).
 
 Cost should not turn a yes, if funded, into a no. Families can indicate that their student intends to participate if the family responsibility can be reduced. Choose no only if the student cannot participate regardless of financial assistance.
 
@@ -14,9 +14,15 @@ The trip is planning around $2,500 per traveler. This is an estimate, not a fina
 
 The response records whether a family can plan for up to $2,000 or needs the family responsibility reduced below $2,000. If outside support cannot bring the final responsibility within the amount selected, the program must return to the family for a new decision before final registration.
 
+### The $50 deposit choice
+
 Every yes response includes the same separate $50 conditional-deposit choice. Choosing to pay now creates the connected $50 charge and opens payment options after the response is saved. Choosing that the deposit cannot be paid at this time creates no new charge and does not change the yes response.
 
+### Already paid the deposit?
+
 Families with a completed $50 deposit do not submit again or pay another $50. Use the [Family Portal](/portal) to review the connected record. For an individual balance, payment, refund, or access question, contact Mr. Parker directly.
+
+### Refunds and final registration
 
 This is initial family intent, not the final trip contract. The deposit is refundable until the participation threshold is confirmed and the Boosters pay the WorldStrides group deposit; after that it becomes nonrefundable. This page does not establish that the group deposit has been paid. Changing a response does not automatically refund a completed payment.
 

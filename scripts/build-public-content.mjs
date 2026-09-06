@@ -138,8 +138,8 @@ const pages = [
   },
   {
     slug: "the-band-folder",
-    title: "The Band Folder",
-    summary: "Everything needed for band: calendar, Family Portal, student supplies, clothing, and methods.",
+    title: "Student Resources",
+    summary: "The Band Folder: student supplies, clothing, methods, calendar, and Family Portal.",
     audience: "Students and families",
     source: sources.bandFolder,
     category: "Everyday resources",

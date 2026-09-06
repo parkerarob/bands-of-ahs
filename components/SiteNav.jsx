@@ -7,14 +7,14 @@ import { readStaffSession } from "@/lib/staffSession";
 
 const HIDDEN_NAV_ROUTES = ["/raleigh-brief", "/attendance", "/day-1-agenda", "/regiment-os"];
 const NAV_LINKS = [
-  { href: "/info/2026-2027-band-information", label: "Info" },
+  { href: "/info/2026-2027-band-information", label: "Band Info" },
   { href: "/info/marching-band-2026", label: "Marching Band" },
   { href: "/calendar", label: "Calendar" },
   { href: "/newsletter", label: "Weekly" },
   { href: "/portal", label: "Family Portal", profile: true },
   { href: "/fundraising", label: "Fundraisers" },
   { href: "/sponsors", label: "Support" },
-  { href: "/info/the-band-folder", label: "Resources" },
+  { href: "/info/the-band-folder", label: "Student Resources" },
   { href: "/assistant", label: "Ask" }
 ];
 
@@ -86,17 +86,13 @@ export default function SiteNav() {
             Manage
           </Link>
         )}
-        {session.signedIn ? (
+        {session.signedIn && (
           <span className="nav-account">
             <span className="nav-account-name">Signed in{session.firstName ? ` as ${session.firstName}` : ""}</span>
             <button type="button" className="nav-signout" onClick={signOut}>
               Sign out
             </button>
           </span>
-        ) : (
-          <Link className="nav-signin" href="/portal">
-            Sign in
-          </Link>
         )}
       </nav>
     </header>

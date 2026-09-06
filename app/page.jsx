@@ -30,7 +30,10 @@ export default function HomePage() {
     ...group,
     pages: data.pages.filter((page) => page.category === group.category)
   }));
-  const sponsorshipPages = data.pages.filter((page) => page.category === "Support the band");
+  const sponsorshipPages = [
+    { slug: "sponsors", href: "/sponsors", audience: "Businesses and community", title: "Sponsorship opportunities", summary: "Program support, sponsorship levels, and instrument giving." },
+    { slug: "give", href: "/sponsors/give", audience: "Families, alumni, and friends", title: "Make a donation", summary: "Give $5 or more to support Ashley Bands. Individuals and businesses are welcome." }
+  ];
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -45,6 +48,12 @@ export default function HomePage() {
 
   return (
     <main className="home">
+      <nav className="home-family-bar" aria-label="Student and family shortcuts">
+        <span>Already part of the band?</span>
+        <Link href="/portal">Family Portal <span aria-hidden="true">↗</span></Link>
+        <Link href="/calendar">Band Calendar <span aria-hidden="true">↗</span></Link>
+        <Link href="/carnegie-2027/commit">Carnegie family response <span aria-hidden="true">↗</span></Link>
+      </nav>
       <section className="home-campaign-hero" aria-labelledby="home-hero-title">
         <div className="home-campaign-copy">
           <p className="home-campaign-kicker">Ashley High School Bands · North Carolina</p>
@@ -70,13 +79,6 @@ export default function HomePage() {
         </figure>
       </section>
 
-      <nav className="home-family-bar" aria-label="Student and family shortcuts">
-        <span>Already part of the band?</span>
-        <Link href="/portal">Family Portal <span aria-hidden="true">↗</span></Link>
-        <Link href="/calendar">Band Calendar <span aria-hidden="true">↗</span></Link>
-        <Link href="/carnegie-2027/commit">Carnegie family response <span aria-hidden="true">↗</span></Link>
-      </nav>
-
       <section className="home-program-story" id="our-story" aria-labelledby="our-story-title">
         <div className="home-container home-program-grid">
           <figure className="home-program-photo">
@@ -97,8 +99,9 @@ export default function HomePage() {
       <section className="home-campaign-future" aria-labelledby="home-campaign-future-title">
         <div className="home-container home-campaign-future-grid">
           <div><p className="eyebrow">The road to Carnegie Hall</p><h2 id="home-campaign-future-title">A big stage.<br />A whole community behind it.</h2></div>
-          <div><p>Help make this opportunity possible for Ashley’s young musicians. We’re preparing a campaign to bring families, alumni, businesses, and friends of the band into the journey.</p>
-            <p className="home-campaign-coming">Sponsorship campaign coming soon</p>
+          <div><p>Help make this opportunity possible for Ashley’s young musicians. Start with the current fundraisers, or contact Mr. Parker about helping with the Carnegie Hall campaign.</p>
+            <p className="home-campaign-coming">Help with the road to Carnegie Hall</p>
+            <div className="home-links"><Link href="/fundraising">Current fundraisers</Link><a href="mailto:robert.parker@nhcs.net">Ask about Carnegie support</a></div>
             <Link className="home-btn home-btn-secondary" href="/info/carnegie-2027">Read current trip information <span aria-hidden="true">↗</span></Link>
             <p className="home-campaign-planning">Travel plans, final participation, price, approvals, and funding remain subject to confirmation.</p>
           </div>
@@ -258,7 +261,7 @@ export default function HomePage() {
           </div>
           <div className="home-support-grid">
             {sponsorshipPages.map((page) => (
-              <Link className="home-support-card" href={`/info/${page.slug}`} key={page.slug}>
+              <Link className="home-support-card" href={page.href} key={page.slug}>
                 <span className="home-info-audience">{page.audience}</span>
                 <strong>{page.title}</strong>
                 <span className="home-info-summary">{page.summary}</span>

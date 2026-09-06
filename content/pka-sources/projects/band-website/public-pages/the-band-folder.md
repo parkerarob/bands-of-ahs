@@ -6,13 +6,13 @@ Everything Needed for Band
 
 ### The Official Band Calendar
 
-The band calendar at ashleybands.com/calendar is the source of truth for all band events. Always assume the band calendar is correct if there is a date conflict. Subscribe once and dates update automatically.
+The [band calendar](/calendar) is the source of truth for all band events. Always assume the band calendar is correct if there is a date conflict. Subscribe once and dates update automatically.
 
 ### Family Portal
 
 Every student should be connected to at least one parent or guardian in the Ashley Bands Family Portal. Use it to keep family contacts and student details current and to complete Ashley Bands requests and forms without repeatedly entering information we already have.
 
-Open the portal at https://ashleybands.com/portal.
+[Open the Family Portal](/portal).
 
 ### Google Chat
 
@@ -30,8 +30,8 @@ Students receive invitations to their class-specific chats through their school-
 
 ### Clothing
 
-- Concert attire: Musician Black
-- Spirit wear / general attire: official Red Band Shirt and other program spirit wear
+- Concert attire: [Musician Black details](/info/2026-2027-band-information)
+- Spirit wear / general attire: [official Red Band Shirt and other program spirit wear](https://ashleybandshirts.printify.me/)
 
 ### Band Folder
 
@@ -44,6 +44,8 @@ Students receive invitations to their class-specific chats through their school-
 - Tuner/metronome: TM-60/CM-200 combo provided; TM-70/CM-400 recommended to own
 
 ### Band Methods
+
+These books are provided; owning a copy is recommended.
 
 - Foundations of Superior Performance (FSP), correct book for the student's instrument
 - 101 Rhythmic Rest Patterns

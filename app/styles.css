@@ -5080,3 +5080,21 @@ h2 {
   .home-family-bar > span { flex-basis: 100%; padding: 3px 0; }
   .home-program-photo { min-height: 270px; }
 }
+
+/* Visitor readability: formatted answers and usable optional phone month view. */
+.chat-markdown { white-space: normal; overflow-wrap: anywhere; }
+.chat-markdown p { margin: 0 0 0.8em; }
+.chat-markdown > :last-child { margin-bottom: 0; }
+.chat-markdown a { color: #f2d991; text-decoration: underline; }
+.chat-markdown pre { white-space: pre-wrap; }
+/* Keep the optional month readable without widening the page. Phones open in List. */
+.cal-month-scroll { overflow-x: auto; }
+.cal-phone-hint { display: none; }
+@media (max-width: 760px) {
+  .cal-month-scroll .cal-grid { min-width: 700px; }
+  .cal-month-scroll .cal-chip { font-size: 0.72rem; padding: 5px; white-space: normal; }
+  .cal-month-scroll .cal-chip-time { display: block; }
+  .cal-month-scroll .cal-cell { min-height: 96px; }
+  .cal-phone-hint { display: block; font-size: 0.85rem; }
+  .cal-phone-hint button { background: none; border: 0; padding: 0; font: inherit; color: var(--garnet); text-decoration: underline; cursor: pointer; }
+}

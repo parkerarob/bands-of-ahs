@@ -254,7 +254,8 @@ export default function CarnegieCommitmentClient({ portalMode = false }) {
       <header className={styles.hero}>
         <p className={styles.eyebrow}>Ashley Bands · Carnegie Hall 2027</p>
         <h1>Family commitment</h1>
-        <p>Submit one response per student by Friday, September 4. Tell us whether the student would participate, what total family responsibility would be realistic, and whether the $50 conditional deposit can be paid now. Every yes response includes the same deposit choice.</p>
+        <p>One response per student was requested by Friday, September 4, 2026. For help with a response after that date, <a href="mailto:robert.parker@nhcs.net">contact Mr. Parker</a>. Tell us whether the student would participate, what total family responsibility would be realistic, and whether the $50 conditional deposit can be paid now. Every yes response includes the same deposit choice.</p>
+        <p>Already completed the $50 deposit? Do not submit again or pay another $50. <Link href="/portal/carnegie-2027">Review your record in the Family Portal</Link>.</p>
         <p className={styles.portalOption}><Link href="/carnegie-2027/meeting-packet">Read the complete family meeting packet</Link>{!portalMode ? <> or <Link href="/portal/carnegie-2027">open the connected Family Portal version</Link></> : null}.</p>
       </header>
 
@@ -348,7 +349,7 @@ export default function CarnegieCommitmentClient({ portalMode = false }) {
 
         {error ? <p className={styles.error} role="alert">{error}</p> : null}
         <button className={styles.submit} type="submit" disabled={busy || (portalMode && !studentId)}>{busy ? "Saving…" : fields.depositChoice === "pay_now" ? "Save yes response and continue to $50 payment" : fields.response && fields.response !== "no" ? "Save yes response" : "Save family response"}</button>
-        <p className={styles.fallback}>Cannot use this form tonight? Tell a staff member. Staff can record the verbal response, including whether the $50 deposit can be paid now, and mark login help for follow-up. Payment is never marked received until it is actually completed.</p>
+        <p className={styles.fallback}>Need help with this form? <a href="mailto:robert.parker@nhcs.net">Contact Mr. Parker</a>. Staff can record the verbal response, including whether the $50 deposit can be paid now, and mark login help for follow-up. Payment is never marked received until it is actually completed.</p>
       </form>
     </main>
   );

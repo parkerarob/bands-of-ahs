@@ -6,9 +6,9 @@
 
 ## 2026-2027 Band Information
 
-This page collects the general next-year information normally covered at open house.
+This page collects the 2026-2027 information for students and families.
 
-The band calendar at ashleybands.com/calendar is the official source of truth for dates and times.
+The [band calendar](/calendar) is the official source of truth for dates and times.
 
 ## Major Dates
 
@@ -31,13 +31,9 @@ May 11, 2027 at 7:00 PM
 
 ## Marching Band / Fall Dates
 
-Families should also review the Marching Band 2026 page for fall dates and expectations.
+Families should also review [Marching Band 2026](/info/marching-band-2026) for fall dates and expectations.
 
-Working dates include:
-
-- July 27-31, 2026 - colorguard camp (all week); leadership Jul 28-30
-- August 3, 2026 - band camp
-- August 10, 2026 - band camp
+Fall dates include:
 - September 26, 2026 - mattress fundraiser
 - October 17, 2026 - Pirate Classic, confirmed / registered
 
@@ -49,8 +45,7 @@ The band calendar is the official source of truth for band events.
 
 Subscribe to the calendar instead of downloading a one-time copy. Subscribing allows updates to appear automatically.
 
-Open and subscribe at:  
-https://ashleybands.com/calendar
+[Open the calendar and subscription options](/calendar).
 
 ### Family Portal
 
@@ -64,9 +59,9 @@ The Family Portal is used for:
 - instrument / music / equipment records
 - band communication
 
-Open the portal at https://ashleybands.com/portal
+[Open the Family Portal](/portal).
 
-If your email is new or does not connect to your student, request access from the portal. If you still need help, email Mr. Parker.
+If your email is new or does not connect to your student, request access from the portal. If you still need help, [email Mr. Parker](mailto:robert.parker@nhcs.net).
 
 ### Google Chat
 
@@ -78,7 +73,7 @@ Important note: with the change from Google to Microsoft, we may transition to M
 
 ## Student Materials
 
-The Band Folder is the main resource page for everything students need.
+[Student Resources (The Band Folder)](/info/the-band-folder) is the main page for student supplies, clothing, and methods.
 
 Students should have:
 
@@ -110,7 +105,7 @@ All band members need the official red band shirt.
 
 The red band shirt is used for pep rallies, community performances, parades, and informal events.
 
-It can be purchased through the Band Shirts Store.
+[Buy the official Red Band Shirt](https://ashleybandshirts.printify.me/).
 
 ## Parent Involvement
 
@@ -128,6 +123,6 @@ All parents are connected to the Band Boosters simply by being part of the progr
 
 ## Questions
 
-For band questions, email Mr. Parker.
+For band questions, [email Mr. Parker](mailto:robert.parker@nhcs.net).
 
-For booster-specific questions, contact the Band Boosters.
+For booster-specific questions, [contact the Band Boosters](/boosters).

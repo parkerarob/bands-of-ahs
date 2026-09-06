@@ -4,9 +4,9 @@ Reference material for standard student equipment, materials, and baseline progr
 
 ## Required Items — All Band Students
 
-- **Instrument** (personal, rental, or school-owned — see `knowledge/instrument-reference.md`)
-- **Concert Attire:** Musician Black (all-black — see `facts/bandsofahs-facts.md`)
-- **Spirit Wear:** Official Red Band Shirt (required)
+- **Instrument** in working condition. See [instrument options and student supplies](/info/the-band-folder).
+- **Concert Attire:** Musician Black. See [concert attire details](/info/2026-2027-band-information).
+- **Spirit Wear:** [Official Red Band Shirt](https://ashleybandshirts.printify.me/) (required)
 - **Band Folder:** 1-inch BLACK 3-ring binder, sheet protectors, pencil pouch with pencils/scissors/eraser
 - **Tuner/Metronome:** TM-60/CM-200 combo provided; recommend owning TM-70/CM-400
 - **Band Methods** (provided but recommended to own):

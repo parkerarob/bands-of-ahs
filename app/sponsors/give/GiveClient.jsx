@@ -156,11 +156,11 @@ export default function GiveClient() {
         ) : (
           <>
             <label className="give-label">
-              {studentName ? "Your name or business name" : "Business name"}
+              Your name or business name
               <input
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
-                placeholder={studentName ? "Donor or business" : "Your business"}
+                placeholder="Individual, family, or business"
                 readOnly={Boolean(attributionToken) && !studentName}
               />
             </label>
@@ -179,7 +179,7 @@ export default function GiveClient() {
             {method === "check" ? (
               <label className="give-label">
                 Email (for your receipt)
-                <input type="email" value={payerEmail} onChange={(e) => setPayerEmail(e.target.value)} placeholder="you@business.com" />
+                <input type="email" value={payerEmail} onChange={(e) => setPayerEmail(e.target.value)} placeholder="you@example.com" />
               </label>
             ) : (
               <p className="give-muted">Your online receipt goes to the verified email on the PayPal account.</p>
