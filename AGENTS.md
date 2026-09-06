@@ -18,3 +18,7 @@ operating layer from historical assistant repositories or memory.
 Read `CLAUDE.md` for project mechanics, privacy boundaries, and verification commands; the desk
 remains the operating context. When instructions conflict, the stricter privacy, authority, or
 verification boundary wins.
+
+Codex Area hooks in `.codex/hooks.json` reuse `.claude/settings.json` through the shared workdesk
+adapter. New definitions must be reviewed in Codex `/hooks`; installed configuration alone does not
+prove runtime enforcement. The checks supplement the repository instructions and checked commands.
