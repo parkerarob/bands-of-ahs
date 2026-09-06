@@ -24,10 +24,13 @@ inventing commands or paths. Do not import an uninstalled environment helper.
    compatibility commit required by the verified Vercel author identity:
 
    ```sh
-   git -c user.name=parkerarob -c user.email=robert.parker@nhcs.net commit --allow-empty -m "Authorize production release (#ISSUE)"
+   git -c user.name=parkerarob -c user.email=robert.parker@nhcs.net commit --allow-empty -m "Authorize production release (#ISSUE)" -m "Checked: <one line: what was actually verified before authorizing>"
    ```
 
-   Replace ISSUE with the owning issue number. This is already covered by standing publication
+   Replace ISSUE with the owning issue number. The `Checked:` trailer is required: readiness refuses
+   an authorization commit without one, so the authorize pairing is evidence of review rather than a
+   reflex (workshop#121). Say what you looked at, e.g. `Checked: preview route readback, calendar
+   projection diff, no person data in the change`. This is already covered by standing publication
    authority; it does not reattribute the substantive work. Do not do this for investigate-only work.
 4. Push `main`, then run `npm run release:checked`. `npm run deploy:checked` is the same path.
 
