@@ -104,6 +104,9 @@ at the first safe pause, state why the emergency lane was used, and complete all
 closure steps afterward. This exception does not authorize human communication, spending, destructive
 data repair, or concealment of uncertainty.
 
+Release setup and recovery use [docs/RELEASING.md](docs/RELEASING.md). Prepare the authorization
+commit before invoking the checked release; do not discover identity prerequisites through a failed build.
+
 ## Verification by risk
 
 Run the narrowest relevant tests during implementation, then the required repository checks before

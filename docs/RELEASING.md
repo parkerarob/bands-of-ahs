@@ -1,0 +1,62 @@
+# AshleyBands release recipe
+
+## Prepare a checkout
+
+Run `npm run setup:checkout`. The runtime wrapper selects the installed Node version in `.nvmrc`
+through nvm when necessary. Install that version if it is absent. Setup uses `npm ci`; it refuses
+external dependency symlinks and leaves package/lockfile discrepancies visible for correction.
+It checks the local environment, canonical calendar checkout, and exact Vercel project/team link.
+Use `BANDSOFAHS_DIR` for a non-sibling canonical checkout. The release suite currently expects
+`.env.local` in this checkout (some individual tools also support `BAND_WEBSITE_ENV`). Provision
+that ignored file from the trusted local environment; never print, publish, or commit secrets.
+Setup reports the exact link command if `.vercel/project.json` is missing.
+
+For ad hoc Node scripts use `bash scripts/runtime.sh node <script>` and the existing
+`scripts/lib/workspace-paths.mjs` environment loader. Inspect `npm run` and `rg --files` before
+inventing commands or paths. Do not import an uninstalled environment helper.
+
+## Prepare the release
+
+1. Complete the issue's focused checks and integrate the intended files into `main`.
+2. Refresh generated projections before committing. Preserve unrelated working-tree changes;
+   use a separate checkout with its own installed dependencies if necessary.
+3. Commit substantive work as Atlas. For an authorized production release, create the narrow
+   compatibility commit required by the verified Vercel author identity:
+
+   ```sh
+   git -c user.name=parkerarob -c user.email=robert.parker@nhcs.net commit --allow-empty -m "Authorize production release (#ISSUE)"
+   ```
+
+   Replace ISSUE with the owning issue number. This is already covered by standing publication
+   authority; it does not reattribute the substantive work. Do not do this for investigate-only work.
+4. Push `main`, then run `npm run release:checked`. `npm run deploy:checked` is the same path.
+
+The wrapper acquires a project-wide lock across checkouts on this Mac, checks readiness and freshly
+fetches `origin/main` before the expensive suite, then rechecks after verification. It refuses a
+changed checkout or commit. All existing production checks remain required. Publication uses the
+pinned CLI and verifies the exact commit against the final `ashleybands.com` alias. Verify affected
+routes and risk-specific behavior as required by `PROJECT_WORKFLOW.md`.
+
+The local lock cannot coordinate another machine or a raw dashboard/CLI deployment. Keep production
+publication on this checked path and coordinate any other publisher; the final commit/domain proof
+still detects a mismatched alias at the time it is checked.
+
+## Failure and recovery
+
+Each phase prints a concise result and the full local log path. Logs and locks live outside Git in
+`${XDG_STATE_HOME:-$HOME/.local/state}/ashleybands-release`, with private permissions. Logs may contain
+sensitive diagnostics: inspect locally and sanitize excerpts before posting. Failed verification
+never deploys. A live-proof failure means publication may already have happened: inspect the alias
+before retrying, and use `verify:live` to repeat proof without redeploying.
+
+Normal exit and interrupt release the lock. After an uncatchable kill, inspect `production.lock/pid`
+and confirm that process and its deployment children have ended. Only then remove that stale lock
+directory. Never automatically steal a lock or interrupt another release. A remote mismatch requires
+integration and another verification run; never force-push to clear it.
+
+## Historical context
+
+Earlier recipes referenced `/deploy-website`, raw Vercel commands, and a separate live branch.
+`main` is the production source; those older recipes are superseded by this file. Preview environment
+parity is not established here. This cleanup does not change hosting accounts, preview configuration,
+production runtime settings, or Vercel identity ownership.

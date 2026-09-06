@@ -26,33 +26,16 @@ hosted-state contracts, and implementations without duplicating their facts.
   (not "Eugene Ashley"). Full rules: BandsofAHS `references/voice.md`.
 
 ## Deploy
-- `/deploy-website` only. Never deploy spring-concert-2026.vercel.app.
-- The checked production command is `npm run deploy:checked`; it refreshes safe local projections,
-  runs the production identity/service preflight, integration/privacy checks, lints, builds, and
-  invokes the pinned Vercel production CLI. It is an alias of the shared `release:checked` entry
-  point, stamps the exact Git commit into deployment metadata, and reads `ashleybands.com` back before
-  success. The other shared entry points are `verify:change`, `verify:release`, and `verify:live`.
-  Do not bypass `npm run deploy:preflight`.
-- Production currently requires a Rob-authored HEAD commit using `robert.parker@nhcs.net`, because
-  that remains the verified identity on the Vercel Hobby account. Rob's GitHub login is
-  `parker-a-rob`; the repository owner is the `PARKERAROB` organization. An
-  Atlas-authored HEAD is rejected by Vercel as an `UNKNOWN` deployment with a zero-millisecond build.
-  The identity rail applies to GitHub issues and comments, not commit authorship in this repository.
-  Workdesk's standing publication approval covers the narrow Rob-authored authorization commit after
-  the substantive Atlas-authored commit; do not raise again unless Rob withheld publication for the
-  current change or Atlas knows a non-obvious material risk. — Rob, 2026-08-04
-- **CONSOLIDATED 2026-06-15: `main` now has ALL content** (`band-of-heroes-live` merged into `main`,
-  no history rewrite). The old "deploying `main` drops live content" warning is now STALE — `main` is
-  the full superset. Prod stays aliased from the last `band-of-heroes-live` deploy until the next
-  `vercel --prod`; **going forward, work and deploy from `main`.** (Verify with `curl ashleybands.com/<route>`
-  if unsure what's currently live.)
-- `vercel --prod --yes` builds with Production env + aliases ashleybands.com. **Preview deploys
-  (`vercel`) fail** here — env vars are scoped to Production only, so a preview `next build` exits 1
-  even when the local build passes. Use prod, or fix preview-scoped env, don't chase the code.
-- Run production Supabase CLI operations through `npm run supabase:production -- <command>`. The
-  wrapper verifies project `edcmfzxqtdbgygeimedo` and removes any stale `SUPABASE_ACCESS_TOKEN`
-  override before invoking the linked CLI. Incident detail and recovery steps:
-  `docs/incidents/2026-08-17-open-house-deployment.md`.
+
+Use `npm run release:checked` (`deploy:checked` is its compatibility alias).
+The single operating recipe is [docs/RELEASING.md](docs/RELEASING.md): checkout setup,
+release preparation, validation, production publication, live proof, and interrupted-run recovery.
+Do not bypass the checked wrapper or `deploy:preflight`. It preserves the required production
+identity, service, privacy, integration, security, build, and commit-bound public-alias checks.
+
+Run production Supabase CLI operations through `npm run supabase:production -- <command>`.
+That wrapper validates the production project and removes stale token overrides. Incident history:
+`docs/incidents/2026-08-17-open-house-deployment.md`.
 
 ## Family portal
 - **No general approval gate for family-owned profile/contact changes or roster-matched access**
