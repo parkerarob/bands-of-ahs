@@ -121,6 +121,7 @@ function EditRow({ business, onSave, onCancel }) {
 
 function SendQueuePanel({ session, askedCount }) {
   const [queued, setQueued] = useState(null);
+  const [queueRows, setQueueRows] = useState([]);
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState("");
 
@@ -130,6 +131,7 @@ function SendQueuePanel({ session, askedCount }) {
       if (res.ok) {
         const body = await res.json();
         setQueued(body.queued);
+        setQueueRows(body.rows || []);
       }
     } catch {
       // leave count as-is
@@ -153,7 +155,7 @@ function SendQueuePanel({ session, askedCount }) {
       const res = await fetch("/api/sponsors/businesses/send-queue", {
         method: "POST",
         headers: authHeaders(session),
-        body: JSON.stringify({ confirm: true })
+        body: JSON.stringify({ confirm: true, previewIds: queueRows.filter((row) => row.send_status === "queued").map((row) => row.id) })
       });
       const body = await res.json();
       if (!res.ok) throw new Error(body.error || "Send failed");
@@ -166,19 +168,27 @@ function SendQueuePanel({ session, askedCount }) {
     }
   }
 
-  if (!queued) {
+  if (!queued && !queueRows.length) {
     return result ? <p className="biz-queue-note">{result}</p> : null;
   }
 
   return (
-    <p className="biz-queue-note">
-      <strong>{queued} email{queued === 1 ? "" : "s"} queued and ready to send.</strong>{" "}
-      <button type="button" className="sponsors-btn sponsors-btn-primary" onClick={send} disabled={busy}>
+    <section className="biz-queue-note">
+      <strong>{queued} email{queued === 1 ? "" : "s"} queued for review.</strong>
+      <p>Review the recipients below before sending. Family introductions use the same willingness email shown in the business preview. Failed rows are shown for follow-up and are not included in this send.</p>
+      <ul>
+        {queueRows.map((row) => (
+          <li key={row.id}>
+            {row.business?.name_display || "Business"} · {row.sent_to_email || "Missing recipient"} · {row.campaign === "family-warm-request" ? "Family introduction" : "Business outreach"} · {row.send_status}
+          </li>
+        ))}
+      </ul>
+      <button type="button" className="sponsors-btn sponsors-btn-primary" onClick={send} disabled={busy || !queued}>
         {busy ? "Sending..." : `Send queued (${queued})`}
       </button>
-      {" "}Sends through Resend on ashleybands.com. You are the one clicking send.
-      {result && <span style={{ display: "block", marginTop: 6 }}>{result}</span>}
-    </p>
+      <p>You control this send. Refresh the page if the queue has changed.</p>
+      {result && <p role="status">{result}</p>}
+    </section>
   );
 }
 

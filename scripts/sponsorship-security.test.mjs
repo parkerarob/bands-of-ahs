@@ -203,3 +203,58 @@ test("the PayPal webhook settles and refunds the sponsor ledger", () => {
   assert.match(route, /refundSponsorGift/);
   assert.match(route, /confirmGift/);
 });
+
+test("manual reconciliation cannot turn an incomplete online checkout into received money", async () => {
+  const { manualGiftConfirmationError } = await import("../lib/sponsorOperations.mjs");
+  assert.match(manualGiftConfirmationError({ status: "pending", method: "online" }), /processor/);
+  for (const method of ["check", "cash", "other"]) assert.equal(manualGiftConfirmationError({ status: "pending", method }), null);
+  for (const status of ["confirmed", "refunded", "void"]) assert.ok(manualGiftConfirmationError({ status, method: "check" }));
+  assert.ok(manualGiftConfirmationError(null));
+  assert.ok(manualGiftConfirmationError({ status: "pending", method: "unknown" }));
+});
+
+test("sponsorship follow-up excludes unsettled money and distinguishes recognition from payment", async () => {
+  const { sponsorshipSummary } = await import("../lib/sponsorOperations.mjs");
+  const summary = sponsorshipSummary([
+    { status: "confirmed", amount_cents: 25000, listed_on_site: false, recognition_status: "sent" },
+    { status: "confirmed", amount_cents: 5000, listed_on_site: true, recognition_status: "failed" },
+    { status: "pending", amount_cents: 99000, method: "online" },
+    { status: "pending", amount_cents: 6000, method: "check" },
+    { status: "void", amount_cents: 50000 },
+    { status: "refunded", amount_cents: 10000 }
+  ], [
+    { campaign: "family-warm-request", send_status: "queued" },
+    { campaign: "family-warm-request", send_status: "failed" },
+    { campaign: "family-warm-request", send_status: "sent" },
+    { campaign: "cold", send_status: "queued" }
+  ]);
+  assert.deepEqual(summary, { confirmedCount: 2, confirmedCents: 30000, offlinePending: 1, onlinePending: 1, recognitionReview: 1, receiptAttention: 1, badgeFollowUp: 1, introductionsQueued: 1, introductionsFailed: 1, outreachQueued: 2 });
+});
+
+test("badge drafts require confirmed published recognition and contain no student fields", async () => {
+  const { recognitionDraft } = await import("../lib/sponsorOperations.mjs");
+  for (const status of ["pending", "refunded", "void"]) assert.equal(recognitionDraft({ status, listed_on_site: true }), null);
+  assert.equal(recognitionDraft({ status: "confirmed", listed_on_site: false }), null);
+  const draft = recognitionDraft({ id: "sample-id", status: "confirmed", listed_on_site: true, business_name: "Example Sponsor", payer_email: "review@example.com", student: { display_name: "PRIVATE_STUDENT" } });
+  assert.equal(draft.to, "review@example.com");
+  assert.match(draft.text, /Example Sponsor/);
+  assert.match(draft.badgeUrl, /id=sample-id$/);
+  assert.doesNotMatch(JSON.stringify(draft), /PRIVATE_STUDENT/);
+});
+
+test("family introduction labels distinguish request, dispatch and failure", async () => {
+  const { warmRequestLabel } = await import("../lib/sponsorOperations.mjs");
+  assert.match(warmRequestLabel("queued"), /Waiting for staff/);
+  assert.match(warmRequestLabel("sent"), /does not mean.*replied/);
+  assert.match(warmRequestLabel("failed"), /could not be sent/);
+  assert.match(warmRequestLabel(null), /No introduction email has been queued/);
+});
+
+test("outreach send requires the exact reviewed queue, including same-size substitutions", async () => {
+  const { sameOutreachQueue } = await import("../lib/sponsorOperations.mjs");
+  assert.equal(sameOutreachQueue(["a", "b"], ["b", "a"]), true);
+  assert.equal(sameOutreachQueue(["a", "a"], ["a", "b"]), false);
+  assert.equal(sameOutreachQueue(["a", "b"], ["a", "c"]), false);
+  assert.equal(sameOutreachQueue(["a"], ["a", "b"]), false);
+  assert.equal(sameOutreachQueue(undefined, ["a"]), false);
+});

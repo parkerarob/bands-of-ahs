@@ -14,9 +14,9 @@ export default function CampaignPage() {
         <p className="eyebrow">For students and families</p>
         <h1>Family Campaign Tools</h1>
         <p className="sponsors-lede">
-          Everything you need to run sponsorship outreach for your student. Pick 5 local
-          businesses you already know, choose whether to contact them yourself or have the band
-          make the introduction, and keep the follow-up organized in your Family Portal.
+          Share a student support link with family, friends, or businesses. You can also add
+          businesses you know and keep follow-up organized in your Family Portal. Participation
+          is optional. Every student is in the same standing whether their family brings in a sponsor or not.
         </p>
         <div className="sponsors-cta-row">
           <Link href="/portal/sponsorship" className="sponsors-btn sponsors-btn-primary">
@@ -34,22 +34,22 @@ export default function CampaignPage() {
         <ol className="campaign-steps">
           <li>
             <strong>Build your warm list (15 min).</strong> List 5 local businesses your family
-            already has a real relationship with: dentist, mechanic, restaurant, parent's
+            already has a real relationship with: dentist, mechanic, restaurant, parent&apos;s
             employer, neighbor with a small business. Skip big-box stores and strangers.
           </li>
           <li>
-            <strong>Visit in person if you can.</strong> Lead with the relationship ("I've been
-            coming here for 8 years"), make the ask, hand them the leave-behind 1-pager, set a
+            <strong>Visit in person if you can.</strong> Lead with the relationship (&quot;I&apos;ve been
+            coming here for 8 years&quot;), make the ask, hand them the leave-behind 1-pager, set a
             follow-up week, thank them. 90 seconds, not a sales pitch.
           </li>
           <li>
-            <strong>Follow up.</strong> Most yeses come on the second contact. Don't take a no
-            personally — it's usually a budget cycle, not a rejection.
+            <strong>Follow up.</strong> Most yeses come on the second contact. Don&apos;t take a no
+            personally — it&apos;s usually a budget cycle, not a rejection.
           </li>
           <li>
-            <strong>Send commits to Mr. Parker.</strong> Family makes the introduction. Mr.
-            Parker thanks the sponsor, delivers any recognition, and the booster team handles
-            intake and receipts. You don't have to be a salesperson.
+            <strong>Share the giving link.</strong> The sponsor can give without signing in.
+            Confirmed gifts appear in your sponsorship total. Staff reviews public recognition;
+            the booster team reconciles check payments.
           </li>
         </ol>
       </section>
@@ -58,9 +58,10 @@ export default function CampaignPage() {
         <p className="eyebrow">Tools</p>
         <h2>Online tracker</h2>
         <p>
-          Add businesses your family knows, ask the band to make the first introduction when
-          that helps, browse businesses that are already open to hearing from an Ashley family,
-          and mark each business after you make contact. Everything lives in the Family Portal.
+          Add businesses your family knows and mark each business after you make contact.
+          If you request a band introduction, staff reviews the request before sending.
+          Check its status in the tracker before you visit. Warmed leads appear when businesses
+          have expressed interest and are available to claim.
         </p>
         <div className="sponsors-cta-row">
           <Link href="/portal/sponsorship" className="sponsors-btn sponsors-btn-primary">
@@ -112,15 +113,17 @@ export default function CampaignPage() {
         <p className="eyebrow">Closing the loop</p>
         <h2>When a business says yes</h2>
         <ol className="campaign-steps">
-          <li>Get the signed sponsorship form (paper from the packet, or online submission).</li>
+          <li>Share your student link or the business payment link from your Family Sponsorship dashboard. No donor login is required.</li>
           <li>
-            Email it to <a href={`mailto:${SPONSOR_CONTACT.email}`}>{SPONSOR_CONTACT.email}</a> with
+            For a paper sponsorship form, special arrangement, or follow-up request, email <a href={`mailto:${SPONSOR_CONTACT.email}`}>{SPONSOR_CONTACT.email}</a> with
             subject: <em>Sponsor commit — [Business Name] — [Your Student Name]</em>
           </li>
           <li>Mark “I contacted them” in your Family Sponsorship dashboard.</li>
           <li>
-            Mr. Parker takes it from there: thank-you call, recognition setup, intake, tax
-            receipt within two weeks.
+            An online gift is confirmed after payment completes. A check gift stays pending until
+            staff verifies receipt. Confirmed gifts receive an automatic receipt; public sponsor
+            recognition follows staff review. Student attribution recognizes participation in
+            program support and does not create a personal spending balance.
           </li>
         </ol>
       </section>
@@ -130,7 +133,7 @@ export default function CampaignPage() {
         <h2>Stuck or need help?</h2>
         <p>
           Email Mr. Parker directly at{" "}
-          <a href={`mailto:${SPONSOR_CONTACT.email}`}>{SPONSOR_CONTACT.email}</a>. He'd rather
+          <a href={`mailto:${SPONSOR_CONTACT.email}`}>{SPONSOR_CONTACT.email}</a>. He&apos;d rather
           you ask once than guess.
         </p>
       </section>

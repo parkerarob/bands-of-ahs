@@ -67,11 +67,22 @@ export async function GET(req) {
   if (familyGiftResult.error) return NextResponse.json({ error: familyGiftResult.error.message }, { status: 500 });
   if (studentGiftResult.error) return NextResponse.json({ error: studentGiftResult.error.message }, { status: 500 });
 
+  const businessIds = [...new Set((prospects || []).map((p) => p.business?.id).filter(Boolean))];
+  const { data: warmRequests, error: warmError } = businessIds.length
+    ? await supabaseAdmin.from("business_outreach")
+      .select("business_id, sent_to_email, send_status, queued_at")
+      .in("business_id", businessIds).eq("campaign", "family-warm-request")
+      .order("queued_at", { ascending: false })
+    : { data: [], error: null };
+  if (warmError) return NextResponse.json({ error: "Introduction status could not be loaded. Please try again." }, { status: 500 });
+
   const linkedProspects = (prospects || []).map((prospect) => {
     const businessId = prospect.business?.id;
     if (!businessId) return prospect;
     const token = signSponsorGiveToken({ businessId, prospectId: prospect.id });
-    return { ...prospect, give_path: `/sponsors/give?a=${encodeURIComponent(token)}` };
+    const warmRequest = (warmRequests || []).find((row) => row.business_id === businessId
+      && row.sent_to_email?.toLowerCase() === prospect.contact_email?.toLowerCase());
+    return { ...prospect, warm_request_status: warmRequest?.send_status || null, give_path: `/sponsors/give?a=${encodeURIComponent(token)}` };
   });
 
   const allConfirmed = new Map();

@@ -44,11 +44,12 @@ export async function POST(req) {
   const prospectId = String(body.prospect_id || "").trim();
   if (!prospectId) return NextResponse.json({ error: "Missing prospect." }, { status: 400 });
 
-  const { data: prospect } = await supabaseAdmin
+  const { data: prospect, error: prospectError } = await supabaseAdmin
     .from("prospects")
     .select("id, family_id, business_id, contact_email")
     .eq("id", prospectId)
     .maybeSingle();
+  if (prospectError) return NextResponse.json({ error: "The business could not be loaded. Try again." }, { status: 500 });
   if (!prospect || prospect.family_id !== fam.id) {
     return NextResponse.json({ error: "That business is not on your list." }, { status: 404 });
   }
@@ -59,17 +60,19 @@ export async function POST(req) {
     );
   }
 
-  await supabaseAdmin.from("prospects").update({ contact_mode: "warm_first" }).eq("id", prospect.id);
-
   // Don't double-queue the same business+campaign.
-  const { data: existing } = await supabaseAdmin
+  const { data: existing, error: existingError } = await supabaseAdmin
     .from("business_outreach")
-    .select("id, send_status")
+    .select("id, send_status, sent_to_email")
     .eq("business_id", prospect.business_id)
     .eq("campaign", WARM_CAMPAIGN)
     .in("send_status", ["queued", "sent"])
     .maybeSingle();
+  if (existingError) return NextResponse.json({ error: "The request queue could not be checked. Try again." }, { status: 500 });
   if (existing) {
+    if (existing.sent_to_email?.toLowerCase() !== prospect.contact_email.toLowerCase()) {
+      return NextResponse.json({ error: "An introduction for this business is already being handled with another contact. Ask Mr. Parker before requesting another." }, { status: 409 });
+    }
     return NextResponse.json({ ok: true, alreadyQueued: true, send_status: existing.send_status });
   }
 
@@ -89,5 +92,8 @@ export async function POST(req) {
   });
   if (insErr) return NextResponse.json({ error: insErr.message }, { status: 500 });
 
+  const { error: modeError } = await supabaseAdmin.from("prospects")
+    .update({ contact_mode: "warm_first" }).eq("id", prospect.id);
+  if (modeError) return NextResponse.json({ error: "The introduction was queued, but your contact preference could not be saved. Refresh to see its status." }, { status: 500 });
   return NextResponse.json({ ok: true, queued: true });
 }

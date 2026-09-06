@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { warmRequestLabel } from "@/lib/sponsorOperations.mjs";
 
 function usd(cents) {
   return `$${((Number(cents) || 0) / 100).toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
@@ -99,7 +100,7 @@ function Dashboard({ data, reload }) {
     <>
       <p className="sp-lede">
         Share one student link with family, friends, or businesses. They can support the band without signing in.
-        You can also add businesses your family already knows and loves below.
+        You can also add businesses your family already knows and loves below. Participation is optional, and every student is in the same standing whether their family brings in a sponsor or not.
       </p>
 
       {data.directGiveLinks?.length ? <DirectGiveLinks links={data.directGiveLinks} /> : null}
@@ -113,9 +114,9 @@ function Dashboard({ data, reload }) {
           <div className="sp-bar-fill" style={{ transform: `scaleX(${goalPct / 100})` }} />
         </div>
         <p className="sp-muted">
-          {data.confirmedGifts > 0
+          The $2,000 goal is a stretch target, never a bill. Totals include confirmed gifts recorded here. Older gifts may still need reconciliation. {data.confirmedGifts > 0
             ? `${data.confirmedGifts} confirmed gift${data.confirmedGifts === 1 ? "" : "s"} so far. Thank you!`
-            : "The $2,000 goal is aspirational — a stretch target, never a bill."}
+            : ""}
         </p>
       </section>
 
@@ -147,8 +148,9 @@ function Dashboard({ data, reload }) {
           </button>
         </div>
         <p className="sp-muted">
-          These are businesses that already told us they&apos;re open to hearing from an Ashley family. Claim one and it
-          becomes yours for a week. You&apos;ll see how to reach them once you claim it.
+          {data.warmedAvailable > 0
+            ? "These businesses told us they are open to hearing from an Ashley family. Claim one for a week to see how to reach them."
+            : "There are no warmed leads available right now. You can share a student link or add a business your family knows."}
         </p>
         {showWarmed ? <WarmedList reload={reload} /> : null}
       </section>
@@ -225,57 +227,31 @@ function ProspectCard({ prospect, reload }) {
   const contacted = Boolean(prospect.contacted_at);
   const showTimer = claimed && !contacted && reclaimAt;
 
-  async function patch(payload) {
+  const [actionError, setActionError] = useState("");
+
+  async function act(url, method, body) {
     setBusy(true);
+    setActionError("");
     try {
-      await fetch(`/api/sponsors/prospects/${prospect.id}`, {
-        method: "PATCH",
+      const res = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        ...(body ? { body: JSON.stringify(body) } : {})
       });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || "This change could not be saved. Try again.");
       await reload();
+    } catch (error) {
+      setActionError(error.message || "This change could not be saved. Try again.");
     } finally {
       setBusy(false);
     }
   }
 
-  async function warmFirst() {
-    setBusy(true);
-    try {
-      await fetch("/api/sponsors/warm-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prospect_id: prospect.id })
-      });
-      await reload();
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function release() {
-    setBusy(true);
-    try {
-      await fetch("/api/sponsors/claim", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ business_id: biz.id })
-      });
-      await reload();
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function remove() {
-    setBusy(true);
-    try {
-      await fetch(`/api/sponsors/prospects/${prospect.id}`, { method: "DELETE" });
-      await reload();
-    } finally {
-      setBusy(false);
-    }
-  }
+  function patch(payload) { return act(`/api/sponsors/prospects/${prospect.id}`, "PATCH", payload); }
+  function warmFirst() { return act("/api/sponsors/warm-email", "POST", { prospect_id: prospect.id }); }
+  function release() { return act("/api/sponsors/claim", "DELETE", { business_id: biz.id }); }
+  function remove() { return act(`/api/sponsors/prospects/${prospect.id}`, "DELETE"); }
 
   async function copyGiveLink() {
     if (!prospect.give_path) return;
@@ -290,6 +266,7 @@ function ProspectCard({ prospect, reload }) {
 
   return (
     <article className="sp-prospect">
+      {actionError ? <p className="sp-error" role="alert">{actionError}</p> : null}
       <div className="sp-prospect-head">
         <div>
           <h3>{biz.name_display || "Business"}</h3>
@@ -319,8 +296,11 @@ function ProspectCard({ prospect, reload }) {
         </button>
       ) : null}
 
+      {prospect.contact_mode === "warm_first" || prospect.warm_request_status ? (
+        <p className="sp-muted" role="status">{warmRequestLabel(prospect.warm_request_status)}</p>
+      ) : null}
       {contacted ? (
-        <p className="sp-done">✓ You contacted them. It&apos;s in the program&apos;s hands now — thank you.</p>
+        <p className="sp-done">✓ You contacted them. Your contact is recorded. Share the sponsor payment link if they are ready to give, or contact Mr. Parker if they need follow-up.</p>
       ) : (
         <div className="sp-actions">
           {!claimed ? (
@@ -341,11 +321,11 @@ function ProspectCard({ prospect, reload }) {
                   disabled={busy}
                   onClick={warmFirst}
                 >
-                  Have the band email them first
+                  Request a band introduction
                 </button>
               </div>
               {prospect.contact_mode === "warm_first" ? (
-                <span className="sp-muted">We&apos;ll send a friendly intro before you visit.</span>
+                <span className="sp-muted">Staff reviews introduction requests before sending. Check the status above before you visit.</span>
               ) : null}
             </div>
           ) : null}
@@ -419,11 +399,18 @@ function AddBusiness({ reload }) {
     e.preventDefault();
     setStatus("saving");
     setMessage("");
-    const res = await fetch("/api/sponsors/prospects", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form)
-    });
+    let res;
+    try {
+      res = await fetch("/api/sponsors/prospects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form)
+      });
+    } catch {
+      setStatus("idle");
+      setMessage("The connection was interrupted. Refresh and check your business list before adding it again.");
+      return;
+    }
     const json = await res.json().catch(() => ({}));
     if (!res.ok) {
       setStatus("idle");
@@ -431,11 +418,22 @@ function AddBusiness({ reload }) {
       return;
     }
     if (form.contact_mode === "warm_first" && json.prospect?.id) {
-      await fetch("/api/sponsors/warm-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prospect_id: json.prospect.id })
-      });
+      try {
+        const warmRes = await fetch("/api/sponsors/warm-email", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prospect_id: json.prospect.id })
+        });
+        const warmJson = await warmRes.json().catch(() => ({}));
+        if (!warmRes.ok) throw new Error(warmJson.error || "The introduction could not be requested.");
+      } catch (error) {
+        setMessage(`Business saved. ${error.message} Use its introduction button to try again; you do not need to add it again.`);
+        setStatus("idle");
+        setForm({ business_name: "", business_id: "", contact_name: "", contact_email: "", contact_phone: "", relationship_note: "", contact_mode: "self" });
+        setOpen(false);
+        await reload();
+        return;
+      }
     }
     setForm({
       business_name: "",
@@ -453,9 +451,12 @@ function AddBusiness({ reload }) {
 
   if (!open) {
     return (
-      <button type="button" className="sp-btn sp-btn-primary sp-add" onClick={() => setOpen(true)}>
-        + Add a business
-      </button>
+      <div>
+        {message ? <p className="sp-error" role="alert">{message}</p> : null}
+        <button type="button" className="sp-btn sp-btn-primary sp-add" onClick={() => { setMessage(""); setOpen(true); }}>
+          + Add a business
+        </button>
+      </div>
     );
   }
 

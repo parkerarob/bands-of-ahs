@@ -291,16 +291,19 @@ function Dashboard({ session, onLogout }) {
 }
 
 function GiftsPanel({ session }) {
+  const [error, setError] = useState("");
   const [data, setData] = useState(null);
   const [busy, setBusy] = useState("");
 
   const load = useCallback(async () => {
     try {
       const res = await fetch("/api/sponsors/gifts", { headers: authHeaders(session) });
-      if (!res.ok) return;
-      setData(await res.json());
-    } catch {
-      /* ignore */
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || "Sponsor gifts could not be loaded.");
+      setData(json);
+      setError("");
+    } catch (error) {
+      setError(error.message || "Sponsor gifts could not be loaded.");
     }
   }, [session]);
 
@@ -358,16 +361,26 @@ function GiftsPanel({ session }) {
     }
   }
 
-  if (!data) return null;
+  if (error) return <p role="alert">{error} <button type="button" onClick={load}>Retry</button></p>;
+  if (!data) return <p>Loading sponsor follow-up…</p>;
   const gifts = data.gifts || [];
-  if (!gifts.length) return null;
   const pending = gifts.filter((g) => g.status === "pending");
   const confirmed = gifts.filter((g) => g.status === "confirmed");
   const fmt = (c) => `$${((c || 0) / 100).toLocaleString()}`;
 
   return (
     <section className="dashboard-alerts" style={{ background: "#fbf7ee", borderColor: "#ecd9ad" }}>
-      <h3>💛 Sponsor gifts</h3>
+      <h3>Sponsorship follow-up</h3>
+      <p>Live sponsor-ledger totals. These do not establish the booster bank balance or include unreconciled historical gifts.</p>
+      <ul>
+        <li>{data.summary?.offlinePending || 0} offline gifts awaiting payment evidence.</li>
+        <li>{data.summary?.onlinePending || 0} online payments awaiting processor confirmation.</li>
+        <li>{data.summary?.recognitionReview || 0} confirmed gifts awaiting recognition review.</li>
+        <li>{data.summary?.receiptAttention || 0} confirmed gifts without a recorded successful receipt send.</li>
+        <li>{data.summary?.badgeFollowUp || 0} published gifts without a recorded badge send.</li>
+        <li>{data.summary?.introductionsQueued || 0} family introductions queued; {data.summary?.introductionsFailed || 0} failed. <Link href="/sponsors/dashboard/businesses">Review outreach</Link>.</li>
+      </ul>
+      <h4>Sponsor gifts</h4>
       <p>
         {fmt(data.confirmedCents)} confirmed · {pending.length} pending. Check gifts are published when staff confirms
         receipt. Online gifts remain private until staff verifies and publishes the sponsor name.
@@ -386,12 +399,16 @@ function GiftsPanel({ session }) {
                 <td>{g.payer_name || "—"}{g.payer_email ? <div className="tracker-sub">{g.payer_email}</div> : null}</td>
                 <td>{g.student?.display_name || "—"}</td>
                 <td>
-                  <button type="button" className="tracker-link tracker-link-action" disabled={busy === g.id} onClick={() => confirmGift(g)}>
-                    Confirm received
-                  </button>
-                  <div className="tracker-sub">
-                    <button type="button" className="tracker-link" disabled={busy === g.id} onClick={() => voidGift(g)}>void</button>
-                  </div>
+                  {g.method === "online" ? <span>Awaiting payment processor. Do not record as received.</span> : (
+                    <>
+                      <button type="button" className="tracker-link tracker-link-action" disabled={busy === g.id} onClick={() => confirmGift(g)}>
+                        Confirm received
+                      </button>
+                      <div className="tracker-sub">
+                        <button type="button" className="tracker-link" disabled={busy === g.id} onClick={() => voidGift(g)}>void</button>
+                      </div>
+                    </>
+                  )}
                 </td>
               </tr>
             ))}
@@ -399,18 +416,32 @@ function GiftsPanel({ session }) {
         </table>
       ) : null}
       {confirmed.length ? (
-        <div className="tracker-sub" style={{ marginTop: 8 }}>
-          <strong>Confirmed:</strong>{" "}
-          {confirmed.map((g, index) => (
-            <span key={g.id}>
-              {index ? ", " : ""}{g.business_name} ({fmt(g.amount_cents)})
-              {g.student?.display_name ? ` · credited to ${g.student.display_name}` : ""}
-              {g.listed_on_site ? " · published" : (
+        <div style={{ marginTop: 16 }}>
+          <h4>Confirmed gifts</h4>
+          {confirmed.map((g) => (
+            <article key={g.id} style={{ borderTop: "1px solid #ecd9ad", padding: "12px 0" }}>
+              <strong>{g.business_name} ({fmt(g.amount_cents)})</strong>
+              <p className="tracker-sub">
+                {g.student?.display_name ? `Student attribution: ${g.student.display_name}. ` : "No student attribution recorded. "}
+                Receipt: {g.recognition_status === "sent" ? "send recorded" : "needs follow-up"}.
+                {g.listed_on_site ? " Public recognition listed." : " Recognition identity needs review."}
+              </p>
+              {!g.listed_on_site ? (
                 <button type="button" className="tracker-link" disabled={busy === g.id} onClick={() => publishGift(g)}>
-                  {" · publish"}
+                  Reviewed identity: publish recognition
                 </button>
-              )}
-            </span>
+              ) : null}
+              {g.recognitionDraft ? (
+                <details>
+                  <summary>Review badge follow-up draft</summary>
+                  <p>To: {g.recognitionDraft.to || "Recipient needs verification"}. Verify this recipient before sending. Opening or copying this draft does not send it.</p>
+                  <p>Subject: {g.recognitionDraft.subject}</p>
+                  <textarea aria-label={`Badge follow-up for ${g.business_name}`} readOnly value={g.recognitionDraft.text} rows={9} style={{ width: "100%", boxSizing: "border-box" }} />
+                  <a href={g.recognitionDraft.badgeUrl} target="_blank" rel="noreferrer">Open sponsor badge</a>
+                  <p className="tracker-sub">{g.badge_sent_at ? "An earlier badge send is recorded." : "No badge send is recorded. This draft is ready for review."}</p>
+                </details>
+              ) : null}
+            </article>
           ))}
         </div>
       ) : null}

@@ -1,4 +1,5 @@
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { manualGiftConfirmationError } from "@/lib/sponsorOperations.mjs";
 import { confirmGift } from "@/lib/sponsorRecognition";
 import { authorizeStaffRequest, STAFF_CAPABILITIES } from "@/lib/staffAuthorization";
 import { logAuditRequired, staffActor } from "@/lib/auditLog";
@@ -21,6 +22,15 @@ export async function PATCH(req, { params }) {
   const { id } = await params;
 
   const body = await req.json().catch(() => ({}));
+
+  // Manual confirmation never substitutes for a processor capture or webhook.
+  if (body.action === "confirm") {
+    const { data: gift, error } = await supabaseAdmin.from("sponsor_gifts")
+      .select("id, status, method").eq("id", id).maybeSingle();
+    if (error) return privateServerError("sponsor-gift", error, "The gift could not be verified.");
+    const reason = manualGiftConfirmationError(gift);
+    if (reason) return privateJson({ error: reason }, gift ? 409 : 404);
+  }
 
   // Optional pre-confirm corrections.
   const pre = {};
