@@ -57,6 +57,7 @@ test('readiness fetches real remote advancement instead of trusting cached origi
   mkdirSync(path.join(repo,'scripts/lib'),{recursive:true});
   copyFileSync(new URL('./release-ready.mjs',import.meta.url),path.join(repo,'scripts/release-ready.mjs'));
   copyFileSync(new URL('./lib/workspace-paths.mjs',import.meta.url),path.join(repo,'scripts/lib/workspace-paths.mjs'));
+  writeFileSync(path.join(repo,'scripts/build-regiment-os-review.mjs'),'process.exit(0);');
   writeFileSync(path.join(repo,'.nvmrc'),process.version.slice(1));
   writeFileSync(path.join(repo,'.gitignore'),'node_modules\n.env.local\n.vercel\n');
   mkdirSync(path.join(repo,'node_modules'));writeFileSync(path.join(repo,'.env.local'),'');

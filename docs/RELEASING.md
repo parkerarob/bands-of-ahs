@@ -49,6 +49,13 @@ sensitive diagnostics: inspect locally and sanitize excerpts before posting. Fai
 never deploys. A live-proof failure means publication may already have happened: inspect the alias
 before retrying, and use `verify:live` to repeat proof without redeploying.
 
+The Regiment OS projection is checked before the expensive suite. Known issue #46 tracks a local
+`PORTAL_SESSION_SECRET` mismatch. Do not commit a replacement encrypted with an unverified local key.
+Until that separate configuration issue is resolved, release processes may inherit the trusted
+production value for that variable only, loaded without printing it from the locally pulled Vercel
+production environment. This does not rotate credentials or alter saved local configuration. The
+projection check must pass with that value before release proceeds.
+
 Normal exit and interrupt release the lock. After an uncatchable kill, inspect `production.lock/pid`
 and confirm that process and its deployment children have ended. Only then remove that stale lock
 directory. Never automatically steal a lock or interrupt another release. A remote mismatch requires
