@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import StewardshipPanel from "./StewardshipPanel";
 import { revokeStaffSession } from "@/lib/staffSession";
 
 const STORAGE_KEY = "bdos_staff_session_v1";
@@ -185,6 +186,7 @@ function Dashboard({ session, onLogout }) {
       </div>
 
       <GiftsPanel session={session} />
+      <StewardshipPanel />
 
       {data.dedup.length > 0 && (
         <section className="dashboard-alerts">
