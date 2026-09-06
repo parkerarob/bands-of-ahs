@@ -10,6 +10,7 @@ const ROLE_OPTIONS = [
   { value: "director", label: "Director" },
   { value: "program_staff", label: "Program staff" },
   { value: "sponsor_lead", label: "Sponsorship lead" },
+  { value: "campaign_researcher", label: "Campaign research (read only)" },
   { value: "booster_treasurer", label: "Booster treasurer" },
   { value: "event_worker", label: "Event worker" },
 ];

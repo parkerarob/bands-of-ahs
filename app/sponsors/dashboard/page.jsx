@@ -481,6 +481,7 @@ export default function DashboardPage() {
         </p>
         <p className="sponsors-lede">
           <Link href="/sponsors">← Back to public hub</Link>
+          {session?.role === "director" && <> · <Link href="/sponsors/team">Campaign research</Link></>}
         </p>
       </section>
 

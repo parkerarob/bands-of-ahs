@@ -393,6 +393,7 @@ test("staff sponsorship APIs use sponsorship capabilities and private responses"
     ["app/api/sponsors/businesses/[id]/queue-send/route.js", ["SPONSORSHIP_WRITE"]],
     ["app/api/sponsors/businesses/send-queue/route.js", ["SPONSORSHIP_READ", "SPONSORSHIP_OUTREACH_SEND"]],
     ["app/api/sponsors/gifts/route.js", ["SPONSORSHIP_READ"]],
+    ["app/api/sponsors/campaign-research/route.js", ["CAMPAIGN_SPONSORSHIP_READ"]],
     ["app/api/sponsors/stewardship/route.js", ["SPONSORSHIP_READ", "SPONSORSHIP_GIFTS_WRITE"]],
     ["app/api/sponsors/gifts/[id]/route.js", ["SPONSORSHIP_GIFTS_WRITE"]],
     ["app/api/sponsors/prospects/[id]/route.js", ["SPONSORSHIP_WRITE"]],
